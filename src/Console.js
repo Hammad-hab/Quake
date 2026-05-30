@@ -6,6 +6,17 @@ Con.text = [];
 
 Con.ToggleConsole_f = function()
 {
+	if (Con.ui_disabled === true)
+	{
+		if (Key.dest.value !== Key.dest.menu)
+		{
+			if (CL.cls.state !== CL.active.connected)
+				M.Menu_Main_f();
+			else
+				Key.dest.value = Key.dest.game;
+		}
+		return;
+	}
 	SCR.EndLoadingPlaque();
 	if (Key.dest.value === Key.dest.console)
 	{
@@ -52,10 +63,10 @@ Con.MessageMode2_f = function()
 
 Con.Init = function()
 {
+	Con.ui_disabled = true;
 	Con.debuglog = (COM.CheckParm('-condebug') != null);
 	if (Con.debuglog === true)
 		COM.WriteTextFile('qconsole.log', '');
-	Con.Print('Console initialized.\n');
 
 	Con.notifytime = Cvar.RegisterVariable('con_notifytime', '3');
 	Cmd.AddCommand('toggleconsole', Con.ToggleConsole_f);

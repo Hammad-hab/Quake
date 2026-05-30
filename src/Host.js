@@ -489,6 +489,8 @@ Host.Init = function()
 	if (load != null)
 		load('Entering the slipgate...', 100);
 	VID.HideLoadScreen();
+	if (Con.ui_disabled === true)
+		M.attract_menu_pending = true;
 	Sys.Print('========Quake Initialized=========\n');
 };
 

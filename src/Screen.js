@@ -217,7 +217,7 @@ SCR.SetUpToDrawConsole = function()
 
 	if (Con.forcedup === true)
 	{
-		SCR.con_current = 200;
+		SCR.con_current = 0;
 		return;
 	}
 
@@ -243,6 +243,8 @@ SCR.SetUpToDrawConsole = function()
 
 SCR.DrawConsole = function()
 {
+	if (Con.ui_disabled === true)
+		return;
 	if (SCR.con_current > 0)
 	{
 		Con.DrawConsole(SCR.con_current);
@@ -319,11 +321,19 @@ SCR.UpdateScreen = function()
 		SCR.CalcRefdef();
 
 	SCR.SetUpToDrawConsole();
-	if ((M.attract_menu_pending === true) && (CL.cls.demoplayback === true) && (CL.cls.signon === 4)
-		&& (SCR.con_current === 0) && (Key.dest.value !== Key.dest.menu))
+	if ((M.attract_menu_pending === true) && (SCR.con_current === 0) && (Key.dest.value !== Key.dest.menu))
 	{
-		M.attract_menu_pending = false;
-		M.Menu_Main_f();
+		if ((CL.cls.demoplayback === true) && (CL.cls.signon === 4))
+		{
+			M.attract_menu_pending = false;
+			M.Menu_Main_f();
+		}
+		else if ((Con.ui_disabled === true) && (CL.cls.demoplayback !== true) && (CL.cls.state !== CL.active.connected)
+			&& (Host.framecount > 90))
+		{
+			M.attract_menu_pending = false;
+			M.Menu_Main_f();
+		}
 	}
 	V.RenderView();
 	GL.Set2D();

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="user-scalable=no">
-<title>Quake</title>
+<title>OpenWeb Quake</title>
 <meta property="og:title" content="Quake" />
 <meta property="og:type" content="game" />
 <meta property="og:image" content="http://cdn.akamai.steamstatic.com/steam/apps/2310/header.jpg" />
@@ -12,26 +12,7 @@ and 6 deathmatch levels of sheer terror and fully immersive sound and lighting.
 Arm yourself against the cannibalistic Ogre, fiendish Vore and indestructible
 Schambler using lethal nails, fierce Thunderbolts and abominable Rocket and
 Grenade Launchers." />
-<link rel="shortcut icon" href="data:image/gif;base64,
-R0lGODlhMAAwANUAAHNzAFBQAP//1NySALl6AJZiAHNKAFAyAP+qJf+4SP/Ujv/isf/j1FAZAP/Hsf9z
-SP+Pa/+rjv+Ojra2tp6enpKSkoaGhnp6em5ubmJiYlZWVkpKSj4+PjIyMiYmJhoaGg4ODgAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAMAAwAAAG/8CQcEgsGo/IJJJDZCqfUCOn4iF6Ks6o
-dkk1XrPbsBCzQW4w4nSmk0Guq+ltuX1sl+PaskZ5P4JAeENlaCEVFhYVYyF9QiAfjxscjx+AcRsdE4tC
-ZRMdfR8eHh0cGxsZGqUcHaEfYmVsF0IXa5ogHqQbqBoZFxYYuqkelXlmIaOlGckZGIeHGMoZqR3DUKVE
-1iEHptEHBxwaGAW+Ghzd2xsHrWEboYzfEOkd3eDPGhrdHR8HEOTq64wfSnlooC+XqV/RUKVr4KGUPzkA
-D3h45AkZuAwFopXKBypdGmxC9E0E1UGeKnuRDpQc6cFjoJASQYEKRbMmq4ktH+IRidNAgf8C4X4C/WkA
-Z86XMDke8PkgwoIIERxEeFDAQLoP8nTG0cex6tICUyFA8OqTosuXM/UV6NaRgNWJ3damRRpCpD4IVKsS
-gFr15wN4HbWmsWugaQSxEQQ8RTzVQGC6aQ/8VTAWAgMHlSk/SMcKcsyvYw1o+KnBZ2jOZwO1VBWg9M9n
-yIIuZVdOsJiWZ54ZEI1RaAbRBxDesx2GawaxZCEcfmAVI4YIFmpX64DEUSht9i6s3WBB7IXdBDAgjInE
-UwgOEDBQygdiwAACcrtxaIgBfgGxyO9HGyXRg0/3BYACggazbAABARPlc4B7A8i12iMciPfAhBQWOFE5
-ExlAAIBYgXD/HBnQSTRNAQQggIBbRj1ySwYPzMILARlIQhFOJHK4SlMgUqCSMD9t+J5VKqrYgVXyvDXJ
-JB6QaOJ7onigHBkQSNDfByQSsKGVVdV25JZbfuXekgT0Z0EEZPTy2YYIfOkelrvtFlMDS7UJHoNWpunW
-Ixdxh0WGX5roJ4NLNthNXAwWmuYAYDr2AUoaQEABOyDU6CcCCZiYwKWYNribkphWiuikP9piwQW5jAqp
-hlb6OCmlmQpVAKKYgpqqlQbYcgE/4MwyDaprzppqofb5uGavvroFQgcP+CKeeAeAgKqvQlkVF174MdeN
-T1VemWqtEV7gbTIYSIKqXmwC4Ca2chK1kmmP79FaVUAu6hLNB8/O+qmdXg16rapr9rjtohfcE8k3Gvin
-7aw1frrWAQwthWaherXrVgcYkNrQKLsY7C+Wr74HoLRf+SisvT9SHE1DouwypFvZIlwVUxRO+LJPVhJ7
-ogEUa7DKzhnT/J6/uwVwrauuDrrprODh/MzOnmBQVL01A/rjAQFUbbWXhyKsYVGNXhIEADs=">
+<link rel="shortcut icon" href="quake-logo.png">
 <style type="text/css">
 html, body {
 	margin: 0;
@@ -100,7 +81,7 @@ canvas {
 	text-align: center;
 }
 .load-title {
-	display: block;
+	display: flex;
 	font-size: clamp(3rem, 14vw, 4.5rem);
 	font-weight: bold;
 	letter-spacing: 0.35em;
@@ -192,8 +173,8 @@ canvas {
 	97% { opacity: 1; }
 }
 @keyframes load-sweep {
-	0% { transform: translateX(-120%); }
-	100% { transform: translateX(420%); }
+	0% { transform: translateX(-0%); }
+	100% { transform: translateX(200%); }
 }
 </style>
 <script type="text/javascript">
@@ -233,15 +214,17 @@ window.WebQuakeLoadProgress = function(text, percent)
 })();
 </script>
 </head>
-<body style="cursor: none;">
+<body style="cursor: pointer;">
 <div id="loadscreen">
 	<div class="load-bg-noise"></div>
 	<div class="load-scanlines"></div>
 	<div class="load-vignette"></div>
 	<div class="load-content">
 		<div class="load-logo">
-			<span class="load-title">QUAKE</span>
-			<span class="load-subtitle">by <span class="load-id">id</span> Software</span>
+			<span class="load-title">
+				<img src="quake-logo.png" alt="Quake" style="width: 100%; height: 100%;">
+			</span>
+			<span class="load-subtitle">OpenWeb Quake</span>
 		</div>
 		<div class="load-divider"></div>
 		<div class="load-bar-wrap">
@@ -306,42 +289,42 @@ window.WebQuakeLoadProgress = function(text, percent)
 <canvas id="mainwindow"></canvas>
 <img id="loading" alt="Loading" style="display: none; position: fixed;">
 </div>
-<script type="text/javascript" src="WebQuake/CDAudio.js"></script>
-<script type="text/javascript" src="WebQuake/Chase.js"></script>
-<script type="text/javascript" src="WebQuake/Client.js"></script>
-<script type="text/javascript" src="WebQuake/Command.js"></script>
-<script type="text/javascript" src="WebQuake/Common.js"></script>
-<script type="text/javascript" src="WebQuake/Console.js"></script>
-<script type="text/javascript" src="WebQuake/CRC.js"></script>
-<script type="text/javascript" src="WebQuake/Cvar.js"></script>
-<script type="text/javascript" src="WebQuake/Definitions.js"></script>
-<script type="text/javascript" src="WebQuake/HudDraw.js"></script>
-<script type="text/javascript" src="WebQuake/EntityDefs.js"></script>
-<script type="text/javascript" src="WebQuake/WebGLRenderer.js"></script>
-<script type="text/javascript" src="WebQuake/Host.js"></script>
-<script type="text/javascript" src="WebQuake/Input.js"></script>
-<script type="text/javascript" src="WebQuake/Keyboard.js"></script>
-<script type="text/javascript" src="WebQuake/Menu.js"></script>
-<script type="text/javascript" src="WebQuake/Model.js"></script>
-<script type="text/javascript" src="WebQuake/MessageBuffer.js"></script>
-<script type="text/javascript" src="WebQuake/Network.js"></script>
-<script type="text/javascript" src="WebQuake/NetworkLoopback.js"></script>
-<script type="text/javascript" src="WebQuake/NetworkWebSocket.js"></script>
-<script type="text/javascript" src="WebQuake/ProgsBuiltins.js"></script>
-<script type="text/javascript" src="WebQuake/ProgsInterpreter.js"></script>
-<script type="text/javascript" src="WebQuake/Protocol.js"></script>
-<script type="text/javascript" src="WebQuake/QuakeUtils.js"></script>
-<script type="text/javascript" src="WebQuake/Renderer.js"></script>
-<script type="text/javascript" src="WebQuake/Sound.js"></script>
-<script type="text/javascript" src="WebQuake/StatusBar.js"></script>
-<script type="text/javascript" src="WebQuake/Screen.js"></script>
-<script type="text/javascript" src="WebQuake/Server.js"></script>
-<script type="text/javascript" src="WebQuake/System.js"></script>
-<script type="text/javascript" src="WebQuake/SizeBuffer.js"></script>
-<script type="text/javascript" src="WebQuake/View.js"></script>
-<script type="text/javascript" src="WebQuake/Vector.js"></script>
-<script type="text/javascript" src="WebQuake/Video.js"></script>
-<script type="text/javascript" src="WebQuake/Wad.js"></script>
+<script type="text/javascript" src="src/CDAudio.js"></script>
+<script type="text/javascript" src="src/Chase.js"></script>
+<script type="text/javascript" src="src/Client.js"></script>
+<script type="text/javascript" src="src/Command.js"></script>
+<script type="text/javascript" src="src/Common.js"></script>
+<script type="text/javascript" src="src/Console.js"></script>
+<script type="text/javascript" src="src/CRC.js"></script>
+<script type="text/javascript" src="src/Cvar.js"></script>
+<script type="text/javascript" src="src/Definitions.js"></script>
+<script type="text/javascript" src="src/HudDraw.js"></script>
+<script type="text/javascript" src="src/EntityDefs.js"></script>
+<script type="text/javascript" src="src/WebGLRenderer.js"></script>
+<script type="text/javascript" src="src/Host.js"></script>
+<script type="text/javascript" src="src/Input.js"></script>
+<script type="text/javascript" src="src/Keyboard.js"></script>
+<script type="text/javascript" src="src/Menu.js"></script>
+<script type="text/javascript" src="src/Model.js"></script>
+<script type="text/javascript" src="src/MessageBuffer.js"></script>
+<script type="text/javascript" src="src/Network.js"></script>
+<script type="text/javascript" src="src/NetworkLoopback.js"></script>
+<script type="text/javascript" src="src/NetworkWebSocket.js"></script>
+<script type="text/javascript" src="src/ProgsBuiltins.js"></script>
+<script type="text/javascript" src="src/ProgsInterpreter.js"></script>
+<script type="text/javascript" src="src/Protocol.js"></script>
+<script type="text/javascript" src="src/QuakeUtils.js"></script>
+<script type="text/javascript" src="src/Renderer.js"></script>
+<script type="text/javascript" src="src/Sound.js"></script>
+<script type="text/javascript" src="src/StatusBar.js"></script>
+<script type="text/javascript" src="src/Screen.js"></script>
+<script type="text/javascript" src="src/Server.js"></script>
+<script type="text/javascript" src="src/System.js"></script>
+<script type="text/javascript" src="src/SizeBuffer.js"></script>
+<script type="text/javascript" src="src/View.js"></script>
+<script type="text/javascript" src="src/Vector.js"></script>
+<script type="text/javascript" src="src/Video.js"></script>
+<script type="text/javascript" src="src/Wad.js"></script>
 <script type="x-shader/x-vertex" id="vshAlias">
 uniform vec3 uOrigin;
 uniform mat3 uAngles;

@@ -502,7 +502,11 @@ S.UpdateAmbientSounds = function()
 			sc = ch.sfx.cache;
 			if (ch.audio.paused === true)
 			{
-				ch.audio.play();
+				try {
+					ch.audio.play();
+				} catch (error) {
+					console.log('Audio play failed: ' + error);
+				}
 				ch.end = Host.realtime + sc.length;
 				continue;
 			}
@@ -643,7 +647,11 @@ S.UpdateStaticSounds = function()
 			sc = ch.sfx.cache;
 			if (ch.audio.paused === true)
 			{
-				ch.audio.play();
+				try {
+					ch.audio.play();
+				} catch (error) {
+					console.log('Audio play failed: ' + error);
+				}
 				ch.end = Host.realtime + sc.length;
 				continue;
 			}

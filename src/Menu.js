@@ -595,7 +595,7 @@ M.AdjustSliders = function(dir)
 	
 	switch (M.options_cursor)
 	{
-	case 3: // screen size
+	case 2: // screen size
 		SCR.viewsize.value += dir * 10;
 		if (SCR.viewsize.value < 30)
 			SCR.viewsize.value = 30;
@@ -603,7 +603,7 @@ M.AdjustSliders = function(dir)
 			SCR.viewsize.value = 120;
 		Cvar.SetValue('viewsize', SCR.viewsize.value);
 		return;
-	case 4: // gamma
+	case 3: // gamma
 		V.gamma.value -= dir * 0.05;
 		if (V.gamma.value < 0.5)
 			V.gamma.value = 0.5;
@@ -611,7 +611,7 @@ M.AdjustSliders = function(dir)
 			V.gamma.value = 1.0;
 		Cvar.SetValue('gamma', V.gamma.value);
 		return;
-	case 5: // mouse speed
+	case 4: // mouse speed
 		CL.sensitivity.value += dir * 0.5;
 		if (CL.sensitivity.value < 1.0)
 			CL.sensitivity.value = 1.0;
@@ -619,7 +619,7 @@ M.AdjustSliders = function(dir)
 			CL.sensitivity.value = 11.0;
 		Cvar.SetValue('sensitivity', CL.sensitivity.value);
 		return;
-	case 6: // music volume
+	case 5: // music volume
 		S.bgmvolume.value += dir * 0.1;
 		if (S.bgmvolume.value < 0.0)
 			S.bgmvolume.value = 0.0;
@@ -627,7 +627,7 @@ M.AdjustSliders = function(dir)
 			S.bgmvolume.value = 1.0;
 		Cvar.SetValue('bgmvolume', S.bgmvolume.value);
 		return;
-	case 7: // sfx volume
+	case 6: // sfx volume
 		S.volume.value += dir * 0.1;
 		if (S.volume.value < 0.0)
 			S.volume.value = 0.0;
@@ -635,7 +635,7 @@ M.AdjustSliders = function(dir)
 			S.volume.value = 1.0;
 		Cvar.SetValue('volume', S.volume.value);
 		return;
-	case 8: // allways run
+	case 7: // allways run
 		if (CL.forwardspeed.value > 200.0)
 		{
 			Cvar.SetValue('cl_forwardspeed', 200.0);
@@ -645,13 +645,13 @@ M.AdjustSliders = function(dir)
 		Cvar.SetValue('cl_forwardspeed', 400.0);
 		Cvar.SetValue('cl_backspeed', 400.0);
 		return;
-	case 9: // invert mouse
+	case 8: // invert mouse
 		Cvar.SetValue('m_pitch', -CL.m_pitch.value);
 		return;
-	case 10: // lookspring
+	case 9: // lookspring
 		Cvar.SetValue('lookspring', (CL.lookspring.value !== 0) ? 0 : 1);
 		return;
-	case 11: // lookstrafe
+	case 10: // lookstrafe
 		Cvar.SetValue('lookstrafe', (CL.lookstrafe.value !== 0) ? 0 : 1);
 	}
 };
@@ -683,27 +683,26 @@ M.Options_Draw = function()
 	M.DrawPic(160 - (M.p_option.width >> 1), 4, M.p_option);
 	
 	M.Print(48, 32, 'Customize controls');
-	M.Print(88, 40, 'Go to console');
-	M.Print(56, 48, 'Reset to defaults');
+	M.Print(56, 40, 'Reset to defaults');
 	
-	M.Print(104, 56, 'Screen size');
-	M.DrawSlider(220, 56, (SCR.viewsize.value - 30) / 90);
-	M.Print(112, 64, 'Brightness');
-	M.DrawSlider(220, 64, (1.0 - V.gamma.value) * 2.0);
-	M.Print(104, 72, 'Mouse Speed');
-	M.DrawSlider(220, 72, (CL.sensitivity.value - 1) / 10);
-	M.Print(72, 80, 'CD Music Volume');
-	M.DrawSlider(220, 80, S.bgmvolume.value);
-	M.Print(96, 88, 'Sound Volume');
-	M.DrawSlider(220, 88, S.volume.value);
-	M.Print(112, 96, 'Always Run');
-	M.Print(220, 96, (CL.forwardspeed.value > 200.0) ? 'on' : 'off');
-	M.Print(96, 104, 'Invert Mouse');
-	M.Print(220, 104, (CL.m_pitch.value < 0.0) ? 'on' : 'off');
-	M.Print(112, 112, 'Lookspring');
-	M.Print(220, 112, (CL.lookspring.value !== 0) ? 'on' : 'off');
-	M.Print(112, 120, 'Lookstrafe');
-	M.Print(220, 120, (CL.lookstrafe.value !== 0) ? 'on' : 'off');
+	M.Print(104, 48, 'Screen size');
+	M.DrawSlider(220, 48, (SCR.viewsize.value - 30) / 90);
+	M.Print(112, 56, 'Brightness');
+	M.DrawSlider(220, 56, (1.0 - V.gamma.value) * 2.0);
+	M.Print(104, 64, 'Mouse Speed');
+	M.DrawSlider(220, 64, (CL.sensitivity.value - 1) / 10);
+	M.Print(72, 72, 'CD Music Volume');
+	M.DrawSlider(220, 72, S.bgmvolume.value);
+	M.Print(96, 80, 'Sound Volume');
+	M.DrawSlider(220, 80, S.volume.value);
+	M.Print(112, 88, 'Always Run');
+	M.Print(220, 88, (CL.forwardspeed.value > 200.0) ? 'on' : 'off');
+	M.Print(96, 96, 'Invert Mouse');
+	M.Print(220, 96, (CL.m_pitch.value < 0.0) ? 'on' : 'off');
+	M.Print(112, 104, 'Lookspring');
+	M.Print(220, 104, (CL.lookspring.value !== 0) ? 'on' : 'off');
+	M.Print(112, 112, 'Lookstrafe');
+	M.Print(220, 112, (CL.lookstrafe.value !== 0) ? 'on' : 'off');
 	
 	M.DrawCharacter(200, 32 + (M.options_cursor << 3), 12 + ((Host.realtime * 4.0) & 1));
 };
@@ -723,10 +722,6 @@ M.Options_Key = function(k)
 			M.Menu_Keys_f();
 			return;
 		case 1:
-			M.state.value = M.state.none;
-			Con.ToggleConsole_f();
-			return;
-		case 2:
 			Cmd.text += 'exec default.cfg\n';
 			return;
 		default:

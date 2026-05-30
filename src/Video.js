@@ -29,6 +29,10 @@ VID.HideLoadScreen = function()
 		return;
 	if (window.WebQuakeLoadProgress != null)
 		window.WebQuakeLoadProgress('Entering the slipgate...', 100);
+	SCR.con_current = 0;
+	Con.backscroll = 0;
+	Con.current = 0;
+	Con.text = [];
 	loadscreen.classList.add('loadscreen-hidden');
 	setTimeout(function()
 	{

@@ -261,7 +261,10 @@ Sbar.SoloScoreboard = function()
 	str = minutes.toString();
 	Sbar.DrawString(256 - (str.length << 3), 4, str);
 
-	Sbar.DrawString(232 - (CL.state.levelname.length << 2), 12, CL.state.levelname);
+	var levelname = CL.state.levelname;
+	if (levelname == null)
+		levelname = '';
+	Sbar.DrawString(232 - (levelname.length << 2), 12, levelname);
 };
 
 Sbar.DrawInventory = function()
@@ -479,7 +482,7 @@ Sbar.Draw = function()
 			Sbar.DrawFrags();
 	}
 
-	if ((Sbar.showscores === true) || (CL.state.stats[Def.stat.health] <= 0))
+	if (CL.state.levelname != null && ((Sbar.showscores === true) || (CL.state.stats[Def.stat.health] <= 0)))
 	{
 		Sbar.DrawPic(0, 0, Sbar.scorebar);
 		Sbar.SoloScoreboard();
