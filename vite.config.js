@@ -6,7 +6,7 @@ export default defineConfig({
   server: { port: 3000 },
   plugins: [
     viteStaticCopy({
-      targets: [{ src: "src/*", dest: "git" }]
+      targets: [{ src: "src/*", dest: "" }]
     })
   ]
 });
