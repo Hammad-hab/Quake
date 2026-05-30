@@ -329,10 +329,10 @@ SCR.UpdateScreen = function()
 			M.Menu_Main_f();
 		}
 		else if ((Con.ui_disabled === true) && (CL.cls.demoplayback !== true) && (CL.cls.state !== CL.active.connected)
-			&& (Host.framecount > 90))
+			&& (Host.framecount >= 1))
 		{
 			M.attract_menu_pending = false;
-			M.Menu_Main_f();
+			M.Menu_SinglePlayer_f();
 		}
 	}
 	V.RenderView();

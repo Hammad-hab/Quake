@@ -37,5 +37,5 @@ VID.HideLoadScreen = function()
 	setTimeout(function()
 	{
 		loadscreen.style.display = 'none';
-	}, 500);
+	}, 250);
 };

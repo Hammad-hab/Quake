@@ -148,8 +148,6 @@ window.onload = function()
 		window[Sys.events[i]] = Sys[Sys.events[i]];
 
 	document.addEventListener('visibilitychange', Sys.onvisibilitychange);
-
-	Sys.frame = setInterval(Host.Frame, 1000.0 / 60.0);
 };
 
 Sys.onbeforeunload = function()

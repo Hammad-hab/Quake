@@ -439,60 +439,130 @@ Host.Frame = function()
 	Con.Print('serverprofile: ' + (c <= 9 ? ' ' : '') + c + ' clients ' + (m <= 9 ? ' ' : '') + m + ' msec\n');
 };
 
+Host.InitSteps = [
+	{
+		text: 'Starting command system...',
+		percent: 8,
+		run: function() {
+			Cmd.Init();
+			V.Init();
+			Chase.Init();
+		}
+	},
+	{
+		text: 'Mounting filesystem...',
+		percent: 18,
+		run: function() {
+			COM.Init();
+			Host.InitLocal();
+		}
+	},
+	{
+		text: 'Loading gfx.wad...',
+		percent: 28,
+		run: function() {
+			W.LoadWadFile('gfx.wad');
+			Key.Init();
+			Con.Init();
+		}
+	},
+	{
+		text: 'Initializing QuakeC...',
+		percent: 38,
+		run: function() {
+			PR.Init();
+			Mod.Init();
+		}
+	},
+	{
+		text: 'Starting network...',
+		percent: 48,
+		run: function() {
+			NET.Init();
+			SV.Init();
+			Con.Print(Def.timedate);
+		}
+	},
+	{
+		text: 'Initializing video...',
+		percent: 58,
+		run: function() {
+			VID.Init();
+		}
+	},
+	{
+		text: 'Loading renderer...',
+		percent: 68,
+		run: function() {
+			Draw.Init();
+			SCR.Init();
+			R.Init();
+		}
+	},
+	{
+		text: 'Starting sound...',
+		percent: 78,
+		run: function() {
+			S.Init();
+			M.Init();
+			CDAudio.Init();
+			Sbar.Init();
+		}
+	},
+	{
+		text: 'Connecting client...',
+		percent: 88,
+		run: function() {
+			CL.Init();
+			IN.Init();
+			Cmd.text = 'exec quake.rc\n' + Cmd.text;
+		}
+	},
+	{
+		text: 'Entering the slipgate...',
+		percent: 100,
+		run: function() {
+			Host.initialized = true;
+			VID.HideLoadScreen();
+			if (Con.ui_disabled === true)
+				M.attract_menu_pending = true;
+			Sys.Print('========Quake Initialized=========\n');
+			Sys.frame = setInterval(Host.Frame, 1000.0 / 60.0);
+		}
+	}
+];
+
 Host.Init = function()
 {
-    var load = window.WebQuakeLoadProgress;
-    Host.oldrealtime = Sys.FloatTime();
-    if (load != null)
-        load('Starting command system...', 8);
-    Cmd.Init();
-    V.Init();
-    Chase.Init();
-    if (load != null)
-        load('Mounting filesystem...', 15);
-    COM.Init();                              // pak index reads happen here
-    Host.InitLocal();
-    if (load != null)
-        load('Loading gfx.wad...', 25);
-    W.LoadWadFile('gfx.wad');               // bulk texture data read here
-    Key.Init();
-    Con.Init();
-    if (load != null)
-        load('Initializing QuakeC...', 36);
-    PR.Init();
-    Mod.Init();
-    if (load != null)
-        load('Starting network...', 48);
-    NET.Init();
-    SV.Init();
-    Con.Print(Def.timedate);
-    if (load != null)
-        load('Initializing video...', 58);
-    VID.Init();
-    if (load != null)
-        load('Loading renderer...', 68);
-    Draw.Init();
-    SCR.Init();
-    R.Init();
-    if (load != null)
-        load('Starting sound...', 78);
-    S.Init();
-    M.Init();
-    CDAudio.Init();
-    Sbar.Init();
-    if (load != null)
-        load('Connecting client...', 88);
-    CL.Init();
-    IN.Init();
-    Cmd.text = 'exec quake.rc\n' + Cmd.text;
-    Host.initialized = true;
-    if (load != null)
-        load('Entering the slipgate...', 100);
-    VID.HideLoadScreen();
-    if (Con.ui_disabled === true)
-        M.attract_menu_pending = true;
-    Sys.Print('========Quake Initialized=========\n');
+	var load = window.WebQuakeLoadProgress;
+	Host.oldrealtime = Sys.FloatTime();
+
+	var stepIndex = 0;
+	function runNextStep() {
+		if (stepIndex >= Host.InitSteps.length) {
+			return;
+		}
+		var step = Host.InitSteps[stepIndex];
+		if (load != null) {
+			load(step.text, step.percent);
+		}
+		
+		try {
+			step.run();
+		} catch (e) {
+			Sys.Error('Error during step "' + step.text + '": ' + e.message);
+			return;
+		}
+		
+		stepIndex++;
+		if (stepIndex < Host.InitSteps.length) {
+			setTimeout(runNextStep, 16);
+		}
+	}
+	
+	runNextStep();
 };
+
 
 Host.Shutdown = function()
 {
