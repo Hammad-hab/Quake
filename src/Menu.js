@@ -361,10 +361,16 @@ M.ScanSaves = function()
 	COM.searchpaths = COM.gamedir;
 	for (i = 0; i < M.max_savegames; ++i)
 	{
-		f = COM.LoadTextFile('s' + i + '.sav');
+		try {
+			f = localStorage.getItem('Quake.' + COM.gamedir[0].filename + '/s' + i + '.sav');
+		} catch (e) { f = null; }
+
 		if (f == null)
 		{
-			legacy = COM.LoadTextFile(String(i) + '.sav');
+			try {
+				legacy = localStorage.getItem('Quake.' + COM.gamedir[0].filename + '/' + i + '.sav');
+			} catch (e) { legacy = null; }
+
 			if (legacy != null)
 			{
 				COM.WriteTextFile('s' + i + '.sav', legacy);
