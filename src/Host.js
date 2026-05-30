@@ -441,57 +441,57 @@ Host.Frame = function()
 
 Host.Init = function()
 {
-	var load = window.WebQuakeLoadProgress;
-	Host.oldrealtime = Sys.FloatTime();
-	if (load != null)
-		load('Starting command system...', 8);
-	Cmd.Init();
-	V.Init();
-	Chase.Init();
-	if (load != null)
-		load('Mounting filesystem...', 18);
-	COM.Init();
-	Host.InitLocal();
-	if (load != null)
-		load('Loading gfx.wad...', 28);
-	W.LoadWadFile('gfx.wad');
-	Key.Init();
-	Con.Init();
-	if (load != null)
-		load('Initializing QuakeC...', 38);
-	PR.Init();
-	Mod.Init();
-	if (load != null)
-		load('Starting network...', 48);
-	NET.Init();
-	SV.Init();
-	Con.Print(Def.timedate);
-	if (load != null)
-		load('Initializing video...', 58);
-	VID.Init();
-	if (load != null)
-		load('Loading renderer...', 68);
-	Draw.Init();
-	SCR.Init();
-	R.Init();
-	if (load != null)
-		load('Starting sound...', 78);
-	S.Init();
-	M.Init();
-	CDAudio.Init();
-	Sbar.Init();
-	if (load != null)
-		load('Connecting client...', 88);
-	CL.Init();
-	IN.Init();
-	Cmd.text = 'exec quake.rc\n' + Cmd.text;
-	Host.initialized = true;
-	if (load != null)
-		load('Entering the slipgate...', 100);
-	VID.HideLoadScreen();
-	if (Con.ui_disabled === true)
-		M.attract_menu_pending = true;
-	Sys.Print('========Quake Initialized=========\n');
+    var load = window.WebQuakeLoadProgress;
+    Host.oldrealtime = Sys.FloatTime();
+    if (load != null)
+        load('Starting command system...', 8);
+    Cmd.Init();
+    V.Init();
+    Chase.Init();
+    if (load != null)
+        load('Mounting filesystem...', 15);
+    COM.Init();                              // pak index reads happen here
+    Host.InitLocal();
+    if (load != null)
+        load('Loading gfx.wad...', 25);
+    W.LoadWadFile('gfx.wad');               // bulk texture data read here
+    Key.Init();
+    Con.Init();
+    if (load != null)
+        load('Initializing QuakeC...', 36);
+    PR.Init();
+    Mod.Init();
+    if (load != null)
+        load('Starting network...', 48);
+    NET.Init();
+    SV.Init();
+    Con.Print(Def.timedate);
+    if (load != null)
+        load('Initializing video...', 58);
+    VID.Init();
+    if (load != null)
+        load('Loading renderer...', 68);
+    Draw.Init();
+    SCR.Init();
+    R.Init();
+    if (load != null)
+        load('Starting sound...', 78);
+    S.Init();
+    M.Init();
+    CDAudio.Init();
+    Sbar.Init();
+    if (load != null)
+        load('Connecting client...', 88);
+    CL.Init();
+    IN.Init();
+    Cmd.text = 'exec quake.rc\n' + Cmd.text;
+    Host.initialized = true;
+    if (load != null)
+        load('Entering the slipgate...', 100);
+    VID.HideLoadScreen();
+    if (Con.ui_disabled === true)
+        M.attract_menu_pending = true;
+    Sys.Print('========Quake Initialized=========\n');
 };
 
 Host.Shutdown = function()

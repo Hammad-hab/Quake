@@ -222,60 +222,62 @@ COM.WriteTextFile = function(filename, data)
 	return true;
 };
 
+// In COM.LoadFile — fix the EndDisc leak on failed pak reads
 COM.LoadFile = function(filename)
 {
-	filename = filename.toLowerCase();
-	var xhr = new XMLHttpRequest();
-	xhr.overrideMimeType('text/plain; charset=x-user-defined');
-	var i, j, k, search, netpath, pak, file, data;
-	Draw.BeginDisc();
-	for (i = COM.searchpaths.length - 1; i >= 0; --i)
-	{
-		search = COM.searchpaths[i];
-		netpath = search.filename + '/' + filename;
-		data = localStorage.getItem('Quake.' + netpath);
-		if (data != null)
-		{
-			Sys.Print('FindFile: ' + netpath + '\n');
-			Draw.EndDisc();
-			return Q.strmem(data);
-		}
-		for (j = search.pack.length - 1; j >= 0; --j)
-		{
-			pak = search.pack[j];
-			for (k = 0; k < pak.length; ++k)
-			{
-				file = pak[k];
-				if (file.name !== filename)
-					continue;
-				if (file.filelen === 0)
-				{
-					Draw.EndDisc();
-					return new ArrayBuffer(0);
-				}
-				xhr.open('GET', search.filename + '/pak' + j + '.pak', false);
-				xhr.setRequestHeader('Range', 'bytes=' + file.filepos + '-' + (file.filepos + file.filelen - 1));
-				xhr.send();
-				if ((xhr.status >= 200) && (xhr.status <= 299) && (xhr.responseText.length === file.filelen))
-				{
-					Sys.Print('PackFile: ' + search.filename + '/pak' + j + '.pak : ' + filename + '\n')
-					Draw.EndDisc();
-					return Q.strmem(xhr.responseText);
-				}
-				break;
-			}
-		}
-		xhr.open('GET', netpath, false);
-		xhr.send();
-		if ((xhr.status >= 200) && (xhr.status <= 299))
-		{
-			Sys.Print('FindFile: ' + netpath + '\n');
-			Draw.EndDisc();
-			return Q.strmem(xhr.responseText);
-		}
-	}
-	Sys.Print('FindFile: can\'t find ' + filename + '\n');
-	Draw.EndDisc();
+    filename = filename.toLowerCase();
+    var xhr = new XMLHttpRequest();
+    xhr.overrideMimeType('text/plain; charset=x-user-defined');
+    var i, j, k, search, netpath, pak, file, data;
+    Draw.BeginDisc();
+    for (i = COM.searchpaths.length - 1; i >= 0; --i)
+    {
+        search = COM.searchpaths[i];
+        netpath = search.filename + '/' + filename;
+        data = localStorage.getItem('Quake.' + netpath);
+        if (data != null)
+        {
+            Sys.Print('FindFile: ' + netpath + '\n');
+            Draw.EndDisc();
+            return Q.strmem(data);
+        }
+        for (j = search.pack.length - 1; j >= 0; --j)
+        {
+            pak = search.pack[j];
+            for (k = 0; k < pak.length; ++k)
+            {
+                file = pak[k];
+                if (file.name !== filename)
+                    continue;
+                if (file.filelen === 0)
+                {
+                    Draw.EndDisc();
+                    return new ArrayBuffer(0);
+                }
+                xhr.open('GET', search.filename + '/pak' + j + '.pak', false);
+                xhr.setRequestHeader('Range', 'bytes=' + file.filepos + '-' + (file.filepos + file.filelen - 1));
+                xhr.send();
+                // EndDisc regardless of success/fail — we found the entry and attempted the load
+                Draw.EndDisc();
+                if ((xhr.status >= 200) && (xhr.status <= 299) && (xhr.responseText.length === file.filelen))
+                {
+                    Sys.Print('PackFile: ' + search.filename + '/pak' + j + '.pak : ' + filename + '\n');
+                    return Q.strmem(xhr.responseText);
+                }
+                break;
+            }
+        }
+        xhr.open('GET', netpath, false);
+        xhr.send();
+        if ((xhr.status >= 200) && (xhr.status <= 299))
+        {
+            Sys.Print('FindFile: ' + netpath + '\n');
+            Draw.EndDisc();
+            return Q.strmem(xhr.responseText);
+        }
+    }
+    Sys.Print('FindFile: can\'t find ' + filename + '\n');
+    Draw.EndDisc();
 };
 
 COM.LoadTextFile = function(filename)
