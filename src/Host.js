@@ -338,6 +338,11 @@ Host._Frame = function()
 {
 	Math.random();
 
+	if (Host.loadScreenVisible === true && CL.cls.signon === 4) {
+		VID.HideLoadScreen();
+		Host.loadScreenVisible = false;
+	}
+
 	Host.realtime = Sys.FloatTime();
 	Host.frametime = Host.realtime - Host.oldrealtime;
 	Host.oldrealtime = Host.realtime;
@@ -523,18 +528,14 @@ Host.InitSteps = [
 		percent: 100,
 		run: function() {
 			Host.initialized = true;
-			Sys.frame = setInterval(Host.Frame, 1000.0 / 60.0);  // start loop FIRST
-			VID.HideLoadScreen();                                  // then hide screen
-			if (Con.ui_disabled === true) {
+			Host.loadScreenVisible = true;  // don't hide yet
+			// remove VID.HideLoadScreen() from here
+			if (Con.ui_disabled === true)
 				M.attract_menu_pending = true;
-				// Give the frame loop one tick to paint before we proceed
-				setTimeout(function() {
-					if (M.attract_menu_pending === true)
-						CL.NextDemo();
-				}, 32);
-			}
 			Sys.Print('========Quake Initialized=========\n');
+			Sys.frame = setInterval(Host.Frame, 1000.0 / 60.0);
 		}
+		
 	}
 ];
 
