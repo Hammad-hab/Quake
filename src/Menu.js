@@ -119,6 +119,7 @@ M.Main_Draw = function()
 	M.DrawPic(72, 32, M.mainmenu);
 	M.DrawPic(54, 32 + M.main_cursor * 20, M.menudot[Math.floor(Host.realtime * 10.0) % 6]);
 	var prompt = [
+		'Click to focus',
 		'Use arrow keys and enter to select',
 		'ESC to toggle menu, F1 for help'
 	];
