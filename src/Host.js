@@ -515,7 +515,7 @@ Host.InitSteps = [
 		}
 	},
 	{
-		text: 'Connecting client...',
+		text: 'Connecting to client...',
 		percent: 88,
 		run: function() {
 			CL.Init();
