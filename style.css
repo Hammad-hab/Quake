@@ -10,6 +10,7 @@ canvas {
 	left: 0;
 	top: 0;
 	display: none;
+	outline: none;
 }
 
 #end1, #end2 {

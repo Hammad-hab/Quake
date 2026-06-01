@@ -339,7 +339,23 @@ Host._Frame = function()
 	Math.random();
 
 	if (Host.loadScreenVisible === true && CL.cls.signon === 4) {
-		VID.HideLoadScreen();
+		// VID.HideLoadScreen();
+		document.getElementById("click-to-start").hidden = false;
+		function activateQuakeInput() {
+			window.focus();
+			document.body.focus();
+			
+			const canvas = document.getElementById("mainwindow");
+			if (canvas) {
+			  canvas.tabIndex = 0;
+			  canvas.focus();
+			}
+			VID.HideLoadScreen();
+
+			// IN.onclick(); // should pointer lock the canvas
+		}
+		
+		document.querySelector("#loadscreen").addEventListener("click", activateQuakeInput);
 		Host.loadScreenVisible = false;
 	}
 
