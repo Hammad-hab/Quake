@@ -2026,6 +2026,8 @@ R.DrawWorld = function()
 	gl.uniform1f(program.uTime, Host.realtime % (Math.PI * 2.0));
 	gl.vertexAttribPointer(program.aPosition.location, 3, gl.FLOAT, false, 20, clmodel.waterchain);
 	gl.vertexAttribPointer(program.aTexCoord.location, 2, gl.FLOAT, false, 20, clmodel.waterchain + 12);
+	gl.depthMask(false);     
+	gl.enable(gl.BLEND);
 	for (i = 0; i < clmodel.leafs.length; ++i)
 	{
 		leaf = clmodel.leafs[i];
@@ -2041,6 +2043,8 @@ R.DrawWorld = function()
 			gl.drawArrays(gl.TRIANGLES, cmds[1], cmds[2]);
 		}
 	}
+	gl.disable(gl.BLEND);       
+	gl.depthMask(true);         
 };
 
 R.MarkLeaves = function()

@@ -894,32 +894,68 @@ M.Menu_Help_f = function()
 	M.help_page = 0;
 };
 
+// M.Help_Draw = function()
+// {
+// 	M.DrawPic(0, 0, M.help_pages[M.help_page]);
+// };
+
+// M.Help_Key = function(k)
+// {
+// 	switch (k)
+// 	{
+// 	case Key.k.escape:
+// 		M.Menu_Main_f();
+// 		return;
+// 	case Key.k.uparrow:
+// 	case Key.k.rightarrow:
+// 		M.entersound = true;
+// 		if (++M.help_page >= M.num_help_pages)
+// 			M.help_page = 0;
+// 		return;
+// 	case Key.k.downarrow:
+// 	case Key.k.leftarrow:
+// 		M.entersound = true;
+// 		if (--M.help_page < 0)
+// 			M.help_page = M.num_help_pages - 1;
+// 	};
+// };
 M.Help_Draw = function()
 {
-	M.DrawPic(0, 0, M.help_pages[M.help_page]);
+    M.DrawPic(16, 4, M.qplaque);
+    M.Print(100, 4, 'Controls');
+
+    var controls = [
+        'WASD / Arrows   Move',
+        'Mouse           Look',
+        'Left Click      Attack',
+        'Space / E       Jump',
+        'R               Next weapon',
+        'F               Previous weapon',
+        '1-8             Select weapon',
+        'Shift           Run',
+        'F1              This screen',
+        'ESC             Menu',
+        'Tilde ~         Console',
+        'F5              Quicksave',
+        'F9              Quickload',
+		'You can use Options to edit the controls'
+    ];
+
+    var i, y = 24;
+    for (i = 0; i < controls.length; ++i)
+    {
+        M.Print(60, y, controls[i]);
+        y += 10;
+    }
+
+    M.Print(48, 172, 'Press ESC to return');
 };
 
 M.Help_Key = function(k)
 {
-	switch (k)
-	{
-	case Key.k.escape:
-		M.Menu_Main_f();
-		return;
-	case Key.k.uparrow:
-	case Key.k.rightarrow:
-		M.entersound = true;
-		if (++M.help_page >= M.num_help_pages)
-			M.help_page = 0;
-		return;
-	case Key.k.downarrow:
-	case Key.k.leftarrow:
-		M.entersound = true;
-		if (--M.help_page < 0)
-			M.help_page = M.num_help_pages - 1;
-	};
+    if (k === Key.k.escape)
+        M.Menu_Main_f();
 };
-
 // Quit menu
 M.quitMessage =
 [
@@ -933,59 +969,106 @@ M.quitMessage =
 	['  If you quit now, I\'ll', '  throw a blanket-party', '   for you next time!', '']
 ];
 
+// M.Menu_Quit_f = function()
+// {
+// 	if (M.state.value === M.state.quit)
+// 		return;
+// 	M.wasInMenus = (Key.dest.value === Key.dest.menu);
+// 	Key.dest.value = Key.dest.menu;
+// 	M.quit_prevstate = M.state.value;
+// 	M.state.value = M.state.quit;
+// 	M.entersound = true;
+// 	M.msgNumber = Math.floor(Math.random() * M.quitMessage.length);
+// };
+
+// M.Quit_Draw = function()
+// {
+// 	if (M.wasInMenus === true)
+// 	{
+// 		M.state.value = M.quit_prevstate;
+// 		M.recursiveDraw = true;
+// 		M.Draw();
+// 		M.state.value = M.state.quit;
+// 	}
+// 	M.DrawTextBox(56, 76, 24, 4);
+// 	M.Print(64, 84, M.quitMessage[M.msgNumber][0]);
+// 	M.Print(64, 92, M.quitMessage[M.msgNumber][1]);
+// 	M.Print(64, 100, M.quitMessage[M.msgNumber][2]);
+// 	M.Print(64, 108, M.quitMessage[M.msgNumber][3]);
+// };
+
+// M.Quit_Key = function(k)
+// {
+// 	switch (k)
+// 	{
+// 	case Key.k.escape:
+// 	case 110:
+// 		if (M.wasInMenus === true)
+// 		{
+// 			M.state.value = M.quit_prevstate;
+// 			M.entersound = true;
+// 		}
+// 		else
+// 		{
+// 			Key.dest.value = Key.dest.game;
+// 			M.state.value = M.state.none;
+// 		}
+// 		break;
+// 	case 121:
+// 		Key.dest.value = Key.dest.console;
+// 		Host.Quit_f();
+// 	}
+// };
+
+
+// Menu Subsystem
 M.Menu_Quit_f = function()
 {
-	if (M.state.value === M.state.quit)
-		return;
-	M.wasInMenus = (Key.dest.value === Key.dest.menu);
-	Key.dest.value = Key.dest.menu;
-	M.quit_prevstate = M.state.value;
-	M.state.value = M.state.quit;
-	M.entersound = true;
-	M.msgNumber = Math.floor(Math.random() * M.quitMessage.length);
+    if (M.state.value === M.state.quit)
+        return;
+    M.wasInMenus = (Key.dest.value === Key.dest.menu);
+    Key.dest.value = Key.dest.menu;
+    M.quit_prevstate = M.state.value;
+    M.state.value = M.state.quit;
+    M.entersound = true;
+    M.msgNumber = 0; // always use first message
 };
+
+M.quitMessage =
+[
+    [' No. You cannot quit.', '  There is no escape.', ' Keep playing forever.', '   Press N to obey.'],
+];
 
 M.Quit_Draw = function()
 {
-	if (M.wasInMenus === true)
-	{
-		M.state.value = M.quit_prevstate;
-		M.recursiveDraw = true;
-		M.Draw();
-		M.state.value = M.state.quit;
-	}
-	M.DrawTextBox(56, 76, 24, 4);
-	M.Print(64, 84, M.quitMessage[M.msgNumber][0]);
-	M.Print(64, 92, M.quitMessage[M.msgNumber][1]);
-	M.Print(64, 100, M.quitMessage[M.msgNumber][2]);
-	M.Print(64, 108, M.quitMessage[M.msgNumber][3]);
+    if (M.wasInMenus === true)
+    {
+        M.state.value = M.quit_prevstate;
+        M.recursiveDraw = true;
+        M.Draw();
+        M.state.value = M.state.quit;
+    }
+    M.DrawTextBox(56, 76, 24, 4);
+    M.Print(64, 84, M.quitMessage[M.msgNumber][0]);
+    M.Print(64, 92, M.quitMessage[M.msgNumber][1]);
+    M.Print(64, 100, M.quitMessage[M.msgNumber][2]);
+    M.Print(64, 108, M.quitMessage[M.msgNumber][3]);
 };
 
 M.Quit_Key = function(k)
 {
-	switch (k)
-	{
-	case Key.k.escape:
-	case 110:
-		if (M.wasInMenus === true)
-		{
-			M.state.value = M.quit_prevstate;
-			M.entersound = true;
-		}
-		else
-		{
-			Key.dest.value = Key.dest.game;
-			M.state.value = M.state.none;
-		}
-		break;
-	case 121:
-		Key.dest.value = Key.dest.console;
-		Host.Quit_f();
-	}
+    // any key just goes back, Y no longer quits
+    if (M.wasInMenus === true)
+    {
+        M.state.value = M.quit_prevstate;
+        M.entersound = true;
+    }
+    else
+    {
+        Key.dest.value = Key.dest.game;
+        M.state.value = M.state.none;
+    }
 };
-
-
-// Menu Subsystem
 M.Init = function()
 {
 	Cmd.AddCommand('togglemenu', M.ToggleMenu_f);

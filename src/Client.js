@@ -1431,6 +1431,7 @@ CL.ParseServerMessage = function()
 			V.ParseDamage();
 			continue;
 		case Protocol.svc.serverinfo:
+			SCR.BeginLoadingPlaque(); 
 			CL.ParseServerInfo();
 			SCR.recalc_refdef = true;
 			continue;
@@ -1440,7 +1441,7 @@ CL.ParseServerMessage = function()
 			CL.state.viewangles[2] = MSG.ReadAngle();
 			continue;
 		case Protocol.svc.setview:
-			CL.state.viewentity = MSG.ReadShort();
+			CL.state.viewentity = MSG.ReadShort(); 
 			continue;
 		case Protocol.svc.lightstyle:
 			i = MSG.ReadByte();
