@@ -1,5 +1,28 @@
 Sys = {};
 
+var CrazySDK = {
+    call: function(fn) {
+        if (window.CrazyGames && window.CrazyGames.SDK) {
+            try { fn(window.CrazyGames.SDK); }
+            catch(e) { console.warn('CrazySDK call failed:', e); }
+        }
+    }
+};
+
+// Wait for SDK to be ready, then fire loadingStart
+(function() {
+    function tryInit() {
+        if (window.CrazyGames && window.CrazyGames.SDK) {
+            window.CrazyGames.SDK.init().then(function() {
+                CrazySDK.call(function(sdk) { sdk.game.loadingStart(); });
+            }).catch(function() {});
+        } else {
+            setTimeout(tryInit, 100);
+        }
+    }
+    tryInit();
+})();
+
 Sys.events = ['onbeforeunload', 'oncontextmenu', 'onfocus', 'onkeydown', 'onkeyup', 'onmousedown', 'onmouseup', 'onmousewheel', 'onpagehide', 'onunload', 'onwheel'];
 
 Sys.Quit = function()

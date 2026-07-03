@@ -6,6 +6,7 @@
     <title>OpenWeb Quake</title>
     <meta property="og:title" content="Quake" />
     <meta property="og:type" content="game" />
+    <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
     <meta
       property="og:image"
       content="http://cdn.akamai.steamstatic.com/steam/apps/2310/header.jpg"
@@ -21,6 +22,7 @@ Grenade Launchers."
     <link rel="shortcut icon" href="quake-logo.png" />
     <link rel="stylesheet" href="style.css" />
     <script type="text/javascript">
+
       window.WebQuakeLoadProgress = function (text, percent) {
         var bar = document.getElementById("loadbar");
         var status = document.getElementById("progress");
@@ -62,7 +64,7 @@ Grenade Launchers."
               style="width: 100%; height: 100%"
             />
           </span>
-		  <h1 hidden id="click-to-start">Click to start</h1>
+		    <h1 id="click-to-start">Click to start</h1>
           <span class="load-subtitle">OpenWeb Quake</span>
         </div>
         <div class="load-divider"></div>

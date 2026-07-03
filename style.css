@@ -13,6 +13,12 @@ canvas {
 	outline: none;
 }
 
+#click-to-start {
+	opacity: 0;
+	text-align: center;
+	margin: 0 auto;
+}
+
 #end1, #end2 {
 	background-color: #1a0000;
 	white-space: pre;
@@ -86,26 +92,41 @@ canvas {
 	position: relative;
 	width: min(420px, 88vw);
 	text-align: center;
+	/* Ensure it doesn't overflow on tiny screens */
+	box-sizing: border-box;
+	padding: 0 clamp(8px, 3vw, 24px);
+}
+
+.load-logo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .load-title {
-	display: flex;
-	font-size: clamp(3rem, 14vw, 4.5rem);
-	font-weight: bold;
-	letter-spacing: 0.35em;
-	text-indent: 0.35em;
-	color: #cc1a1a;
-	text-shadow:
-		0 0 24px rgba(180, 20, 20, 0.7),
-		0 0 50px rgba(120, 0, 0, 0.4),
-		2px 2px 0 #1a0000;
+	/* Fluid width: fills the content box but never exceeds 420px */
+	display: block;
+	width: 100%;
+	max-width: min(360px, 80vw);
+	height: auto;
+	/* Preserve the glow/flicker on the image itself */
+	filter:
+		drop-shadow(0 0 18px rgba(180, 20, 20, 0.7))
+		drop-shadow(0 0 40px rgba(120, 0, 0, 0.4));
 	animation: load-flicker 4s infinite;
+}
+
+/* The <img> inside .load-title fills its parent */
+.load-title img {
+	display: block;
+	width: 100%;
+	height: auto;
 }
 
 .load-subtitle {
 	display: block;
 	margin-top: 0.4rem;
-	font-size: 0.85rem;
+	font-size: clamp(0.7rem, 2vw, 0.85rem);
 	letter-spacing: 0.18em;
 	color: #888;
 	text-transform: uppercase;
@@ -118,7 +139,7 @@ canvas {
 }
 
 .load-divider {
-	margin: 1.6rem auto 1.4rem;
+	margin: clamp(1rem, 3vh, 1.6rem) auto clamp(0.8rem, 2.5vh, 1.4rem);
 	width: 100%;
 	height: 1px;
 	background: linear-gradient(90deg, transparent, #4a0808, #991010, #4a0808, transparent);
@@ -159,7 +180,7 @@ canvas {
 
 .load-status {
 	margin-top: 0.85rem;
-	font-size: 0.78rem;
+	font-size: clamp(0.68rem, 1.8vw, 0.78rem);
 	letter-spacing: 0.06em;
 	color: #707070;
 	min-height: 1.2em;
@@ -167,21 +188,21 @@ canvas {
 
 .load-percent {
 	margin-top: 0.35rem;
-	font-size: 0.7rem;
+	font-size: clamp(0.62rem, 1.6vw, 0.7rem);
 	color: #4a4a4a;
 	letter-spacing: 0.15em;
 }
 
 .load-version {
-	margin-top: 2rem;
-	font-size: 0.65rem;
+	margin-top: clamp(1rem, 3vh, 2rem);
+	font-size: clamp(0.58rem, 1.5vw, 0.65rem);
 	color: #3a3a3a;
 	letter-spacing: 0.1em;
 }
 
 .load-tagline {
 	margin-top: 0.5rem;
-	font-size: 0.62rem;
+	font-size: clamp(0.55rem, 1.4vw, 0.62rem);
 	color: #2e2e2e;
 	font-style: italic;
 }
@@ -198,4 +219,15 @@ canvas {
 @keyframes load-sweep {
 	0% { transform: translateX(-100%); }
 	100% { transform: translateX(300%); }
+}
+
+/* Very short screens (landscape mobile, small laptops) */
+@media (max-height: 500px) {
+	.load-divider {
+		margin: 0.6rem auto;
+	}
+	.load-version,
+	.load-tagline {
+		display: none;
+	}
 }

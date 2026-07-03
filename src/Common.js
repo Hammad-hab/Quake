@@ -222,6 +222,35 @@ COM.WriteTextFile = function(filename, data)
 	return true;
 };
 
+
+COM.pakCache = {};
+
+COM.PreloadPaks = function(onDone) {
+    var paks = [];
+    var i, j, search;
+    for (i = 0; i < COM.searchpaths.length; ++i) {
+        search = COM.searchpaths[i];
+        for (j = 0; j < search.pack.length; ++j)
+            paks.push(search.filename + '/pak' + j + '.pak');
+    }
+    var remaining = paks.length;
+    if (remaining === 0) { onDone(); return; }
+    paks.forEach(function(url) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'arraybuffer';
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status <= 299)
+                COM.pakCache[url] = xhr.response;
+            if (--remaining === 0) onDone();
+        };
+        xhr.onerror = function() {
+            if (--remaining === 0) onDone();
+        };
+        xhr.send();
+    });
+};
+
 // In COM.LoadFile — fix the EndDisc leak on failed pak reads
 COM.LoadFile = function(filename)
 {
@@ -254,14 +283,21 @@ COM.LoadFile = function(filename)
                     Draw.EndDisc();
                     return new ArrayBuffer(0);
                 }
-                xhr.open('GET', search.filename + '/pak' + j + '.pak', false);
+                var pakurl = search.filename + '/pak' + j + '.pak';
+                Draw.EndDisc();
+                // use memory cache if available
+                if (COM.pakCache[pakurl])
+                {
+                    Sys.Print('PackFile: ' + pakurl + ' : ' + filename + '\n');
+                    return COM.pakCache[pakurl].slice(file.filepos, file.filepos + file.filelen);
+                }
+                // fallback: range request
+                xhr.open('GET', pakurl, false);
                 xhr.setRequestHeader('Range', 'bytes=' + file.filepos + '-' + (file.filepos + file.filelen - 1));
                 xhr.send();
-                // EndDisc regardless of success/fail — we found the entry and attempted the load
-                Draw.EndDisc();
                 if ((xhr.status >= 200) && (xhr.status <= 299) && (xhr.responseText.length === file.filelen))
                 {
-                    Sys.Print('PackFile: ' + search.filename + '/pak' + j + '.pak : ' + filename + '\n');
+                    Sys.Print('PackFile: ' + pakurl + ' : ' + filename + '\n');
                     return Q.strmem(xhr.responseText);
                 }
                 break;

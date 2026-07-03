@@ -57,6 +57,24 @@ Key.dest = {
 	value: 0
 };
 
+(function() {
+    var _value = Key.dest.value;
+    Object.defineProperty(Key.dest, 'value', {
+        get: function() { return _value; },
+        set: function(newVal) {
+            var oldVal = _value;
+            _value = newVal;
+            if (oldVal !== newVal) {
+                if (newVal !== Key.dest.game) {
+                    CrazySDK.call(function(sdk) { sdk.game.gameplayStop(); });
+                } else if (CL.cls && CL.cls.signon === 4) {
+                    CrazySDK.call(function(sdk) { sdk.game.gameplayStart(); });
+                }
+            }
+        }
+    });
+})();
+
 Key.bindings = [];
 Key.consolekeys = [];
 Key.shift = [];

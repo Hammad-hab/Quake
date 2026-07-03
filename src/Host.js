@@ -127,6 +127,7 @@ Host.ShutdownServer = function(crash)
 {
 	if (SV.server.active !== true)
 		return;
+	CrazySDK.call(function(sdk) { sdk.game.gameplayStop(); });  // ← add
 	SV.server.active = false;
 	if (CL.cls.state === CL.active.connected)
 		CL.Disconnect();
@@ -340,7 +341,7 @@ Host._Frame = function()
 
 	if (Host.loadScreenVisible === true && CL.cls.signon === 4) {
 		// VID.HideLoadScreen();
-		document.getElementById("click-to-start").hidden = false;
+		document.getElementById("click-to-start").style.opacity = 1;
 		function activateQuakeInput() {
 			window.focus();
 			document.body.focus();
@@ -465,6 +466,7 @@ Host.InitSteps = [
 		text: 'Starting command system...',
 		percent: 8,
 		run: function() {
+			CrazySDK.call(function(sdk) { sdk.game.loadingStart(); });  // ← add
 			Cmd.Init();
 			V.Init();
 			Chase.Init();
@@ -474,7 +476,7 @@ Host.InitSteps = [
 		text: 'Mounting filesystem...',
 		percent: 18,
 		run: function() {
-			COM.Init();
+			// COM.Init();
 			Host.InitLocal();
 		}
 	},
@@ -545,6 +547,8 @@ Host.InitSteps = [
 		run: function() {
 			Host.initialized = true;
 			Host.loadScreenVisible = true;  // don't hide yet
+			CrazySDK.call(function(sdk) { sdk.game.loadingStop(); });   // ← add
+			CrazySDK.call(function(sdk) { sdk.game.gameplayStart(); });
 			// remove VID.HideLoadScreen() from here
 			if (Con.ui_disabled === true)
 				M.attract_menu_pending = true;
@@ -557,35 +561,32 @@ Host.InitSteps = [
 
 Host.Init = function()
 {
-	var load = window.WebQuakeLoadProgress;
-	Host.oldrealtime = Sys.FloatTime();
+    var load = window.WebQuakeLoadProgress;
+    Host.oldrealtime = Sys.FloatTime();
 
-	var stepIndex = 0;
-	function runNextStep() {
-		if (stepIndex >= Host.InitSteps.length) {
-			return;
-		}
-		var step = Host.InitSteps[stepIndex];
-		if (load != null) {
-			load(step.text, step.percent);
-		}
-		
-		try {
-			step.run();
-		} catch (e) {
-			Sys.Error('Error during step "' + step.text + '": ' + e.message);
-			return;
-		}
-		
-		stepIndex++;
-		if (stepIndex < Host.InitSteps.length) {
-			setTimeout(runNextStep, 16);
-		}
-	}
-	
-	runNextStep();
+    // Only COM.Init needs to run early so searchpaths exist for PreloadPaks
+    COM.Init();
+    if (load) load('Downloading game data...', 5);
+
+    COM.PreloadPaks(function() {
+        var stepIndex = 0;
+        function runNextStep() {
+            if (stepIndex >= Host.InitSteps.length) return;
+            var step = Host.InitSteps[stepIndex];
+            if (load) load(step.text, step.percent);
+            try {
+                step.run();
+            } catch(e) {
+                Sys.Error('Error during step "' + step.text + '": ' + e.message);
+                return;
+            }
+            stepIndex++;
+            if (stepIndex < Host.InitSteps.length)
+                setTimeout(runNextStep, 16);
+        }
+        runNextStep();
+    });
 };
-
 
 Host.Shutdown = function()
 {
@@ -1195,6 +1196,10 @@ Host.Pause_f = function()
 		return;
 	}
 	SV.server.paused = !SV.server.paused;
+    if (SV.server.paused === true)
+        CrazySDK.call(function(sdk) { sdk.game.gameplayStop(); });   // ← add
+    else
+        CrazySDK.call(function(sdk) { sdk.game.gameplayStart(); });  // ← add
 	Host.BroadcastPrint(SV.GetClientName(Host.client) + (SV.server.paused === true ? ' paused the game\n' : ' unpaused the game\n'));
 	MSG.WriteByte(SV.server.reliable_datagram, Protocol.svc.setpause);
 	MSG.WriteByte(SV.server.reliable_datagram, SV.server.paused === true ? 1 : 0);
@@ -1310,6 +1315,7 @@ Host.Begin_f = function()
 	Host.client.spawned = true;
 	Host.lastAutoSaveTime = 0.0;
 	Host.MaybeAutoSave();
+	CrazySDK.call(function(sdk) { sdk.game.gameplayStart(); });  // ← add
 };
 
 Host.Kick_f = function()
