@@ -1,0 +1,70 @@
+===========================================================================
+Title                   : The Punishment Due
+Filename                : pun.zip
+Release date            : 2021-03-15
+Author                  : Julian 'Juz' Priestley
+Email Address           : juzley@gmail.com
+
+Description             :
+  A 5 map (+ start map) episode for Quake, based on Lunaran's Copper Quake mod. No particular theme, no story, just go and kill some monsters!
+
+Maps			:
+	start.bsp - Start for Start's Sake (juzley)
+	pun1.bsp - Azure Annoyance (juzley)
+	pun2.bsp - Let Them Eat Quake (fairweather/juzley)
+	pun3.bsp - Tour de Vores (juzley)
+	pun4.bsp - With Fiends Like These (juzley)
+	pun5.bsp - Ogre and Out (juzley)
+
+
+Thanks to   :
+Lunaran - The base copper mod, plus enduring my questions and fixing the couple of bugs I found in the copper code.
+Alekswithak - Music for start.bsp
+Dwell Team - Playtesting + general support.
+Fairweather - Initial work on pun2.bsp
+MarkieMusic - Some additional ambient sounds.
+Various texture artists - I pulled textures and skyboxes in from a few places, and I have no idea who made what (sorry). If you see your textures here, thanks!
+
+===========================================================================
+
+
+===========================================================================
+* What is included *
+
+New levels              : Yes
+Sounds                  : Yes (A couple of extra ambient sounds from MarkieMusic's pack).
+Music                   : Yes (All music by juzley except the start music by Alekswithak)
+Graphics                : Yes
+Other                   : No
+Other files required    : None
+
+
+* Play Information *
+
+Single Player           : Yes
+Cooperative 2-4 Player  : Yes - tested with 2 players, but more should be possible.
+	Look out for extra enemies, and a few places where some cooperation is required for buttons etc.
+	There are a few rough edges, as this pack was designed firstly for single player and then
+	retrofitted for coop, but overall it should play well in coop.
+Deathmatch 2-4 Player   : No
+Difficulty Settings     : Yes
+
+
+* Construction *
+
+Base                    : New from scratch
+Build Time              : Approx 7 months
+Editor(s) used          : Trenchbroom 2 + ericw-tools.
+Known Bugs              : NA
+May Not Run With        : NA
+Tested With             : Quakespasm + Quakespasm Spiked
+
+
+
+* Copyright / Permissions *
+
+You MAY distribute this file, provided you include this text file, with
+no modifications.  You may distribute this file in any electronic
+format (BBS, Diskette, CD, etc) as long as you include this file 
+intact.  I have received permission from the original authors of any
+modified or included content in this file to allow further distribution.

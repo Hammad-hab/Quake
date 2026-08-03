@@ -151,9 +151,11 @@ GL.LoadTexture = function(identifier, width, height, data)
 			glt = GL.textures[i];
 			if (glt.identifier === identifier)
 			{
-				if ((width !== glt.width) || (height !== glt.height))
-					Sys.Error('GL.LoadTexture: cache mismatch');
-				return glt;
+    if ((width !== glt.width) || (height !== glt.height))
+        GL.textures.splice(i, 1); // evict and fall through to re-upload
+    else
+        return glt;
+    break;
 			}
 		}
 	}
