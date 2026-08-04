@@ -24,7 +24,8 @@ Host.Error = function(error)
 	CL.Disconnect();
 	CL.cls.demonum = -1;
 	Host.inerror = false;
-	throw new Error('Host.abortserver');
+	
+	throw new Error(`Host.abortserver ${error}`);
 };
 
 Host.FindMaxClients = function()

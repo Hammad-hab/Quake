@@ -1,0 +1,166 @@
+9/12/97
+================================================================
+Title                   : After the Fall  - Final Release
+
+
+MAKE SURE YOU READ THIS BEFORE MAILING US WITH BUGS AND STUFF!!!
+
+
+Authors                 : The ATF Team.
+
+David "HotFat" Biggs.
+dbiggs@yoyo.cc.monash.edu.au
+        Head 3d modeler, skins, html, PR,
+                Almost all models and most skins.
+
+Alexander "Shogun"  Cohen.
+shogun@compsoc.cs.latrobe.edu.au
+        QuakeC, textures, skins, graphics
+
+Douglas Magee.
+dmagee@flash.net
+        Head Level Designer.
+                e1m1,e1m2,e4m1,e4m2,e4m3,e4m5,e5m2,dm4
+
+Marc "Gear" Roussel.
+gear@videotron.ca
+        Level Designer.
+                e2m1,e2m1,e2m3,e5m1,dm2.
+
+Llewellyn "Slannesh" Collins.
+        3d models and Levels.
+                Cyclops, some weapons.
+
+
+Russel "Krusty" Hayward.
+russel@vision.net.au
+        Level Designer and some skins.
+                e1m3.
+
+Others that helped out
+Brad King.
+        The Original Plot.
+
+"Shiro".
+neogeo@hotmail.com
+        laser model and RPG model.
+
+Scott Fanetti.
+ScotShot@aol.com
+        Minion Skin.
+
+Kevin "Fragmaster" Bowen.
+fragmaster@planetquake.com
+        Some sounds and got us the Web page..
+
+Geoff Phillips
+binky@DeathsDoor.com
+        Wrote some wad tools especially for us.
+
+
+Email Address           : aftershock@dags.cc.monash.edu.au
+URL                     : http://www.planetquake.com/atf
+Description             : You are Storm Patterson. The World
+                        has become overun by gang wars and crime.
+                        The world it hit by a meteorite, resulting
+                        in a lethal virid being release upon the earth.
+                        You must find a cure to the virid and survive.
+                        
+                        18 new levels.
+                        112 new models.
+                        100's of new sounds.
+                        Over 400 new textures.
+                        Max Size progs.dat                    
+                        Virtually Everything Replaced!
+                        It even has features Quake 2 doesn't!
+
+
+Thanks to               : The guys at id of course and all the
+                          people on the net that gave us great support
+                          over the last months of developement. And to
+                          planetquake for hosting our site at
+                          http://www.planetquake.com/atf. Also Nakedman
+                          and Flood for maintaining Cool TC news
+                          sites. A special thank you to the people
+                          makeing quake utilities like WorldCraft,
+                          Quark, Qme, Quest, Meddle, and many other
+                          application we used for this TC.
+
+
+================================================================
+                  
+ 
+* Play Information *
+Single Player           : Definately...
+Cooperative             : Sure...it's great fun!
+Deathmatch              : Yes
+Difficulty Settings     : Yes
+New Sounds              : Yes
+New Graphics            : Yes
+Sound Track             : No..loop wavsa are annoying
+Demos Replaced          : Yes
+Source Included         : Not yet...maybe later.
+
+* Construction *
+
+Base                    : New TC from scratch
+Editor(s) used          : Just about everything. 3d-studio, photoshop,
+                          Deluxe Paint 2, GFX2, Paintbrish, QUARK
+                          Paint Shop Pro, Neopaint, Quark, Meddle 1.6,
+                          qME, Meddle 2.0, Dos Edit, Windows notepad,
+                          Quest, Worldcraft, qART, Pak exploror, Qed,
+                          Pakie, Netscape, Windows, Dos, Linux, Ultrix,
+                          Cool-edit, Sound Forge, RVis, Lv21, PkZIP
+                          Mergewad, qART, md2view, Pico, VI, 
+                          and a free set of 6 steak knives if you order
+                          in the next 15 minutes. *JOKE*
+
+Known Bugs & Notes    : Maybe errors on some save/loading of a level.
+                        Haven't been able to track it down.
+                        If you find any others PLEASE report them.
+                        All Levels are finishable without cheating..
+                        Unlike other commercial TC's.
+                        GL USERS: Make sure you clear out all your mesh
+                        directories mefore running After the Fall.
+                        That means id1/glquake as well!!! I don't things
+                        may look VERY weird.
+        
+                        
+Brushes                 : Zillions
+Construction Time       : In the Making since November 1996.
+
+
+Installation            1. make a directory under quake called "ATF"
+                        2. Unzip the zip file to that directory.
+                        3. Run quake with
+                        quake -game atf -winmem 12
+                        (or higher thatn 12 if you want)
+                        4. Select Any mode of play you want.
+                        the Start map has been replaced so you can go
+                        from there, or go to the maps by name..they are
+
+                        start
+                        atfe1m1, atfe1m2, atfe1m3, atfdm1,
+                        atfe2m1, atfe2m2, atfe2m3, atfdm2,
+                        atfe4m1, atfe4m2, atfe4m3, atfe4m4, 
+                        atfe5m1, atfe5m2.
+                        
+
+
+No extra impulses have been inluced so there is no need to bind keys
+or anything annoying like that. Just use your normal quake config and
+go kick some butt!
+
+For more info check out http://www.planetquake.com/atf
+
+
+What we ran out of time on but were experimenting with..
+
+Environment based footsteps..
+        ie different sounds depending on the floor surface your on.
+Movies.
+        We had planned cutscene movies but simply did not have the time.
+        We had planned several and even wrote the scripts but we wanted this
+        out before quake 2 :)
+
+
